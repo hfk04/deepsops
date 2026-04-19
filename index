@@ -6,140 +6,44 @@
     <title>OPS Servis Takip Sistemi</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-            background: #f4f7fc;
-            padding: 16px;
-            color: #1e293b;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #0f172a;
-        }
-        .city-bar {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .city-btn {
-            background: white;
-            border: 1px solid #cbd5e1;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .city-btn.active {
-            background: #2563eb;
-            color: white;
-            border-color: #2563eb;
-        }
-        .selector-panel {
-            background: white;
-            border-radius: 24px;
-            padding: 20px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .search-box {
-            width: 100%;
-            padding: 14px 18px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 40px;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            background: #fafafa;
-        }
-        .school-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 300px;
-            overflow-y: auto;
-            margin-bottom: 16px;
-        }
-        .school-item {
-            background: #f8fafc;
-            padding: 14px 18px;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
+        body { font-family: 'Segoe UI', Roboto, system-ui, sans-serif; background: #f4f7fc; padding: 16px; color: #1e293b; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: #0f172a; }
+        .city-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+        .city-btn { background: white; border: 1px solid #cbd5e1; padding: 12px 24px; border-radius: 40px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+        .city-btn.active { background: #2563eb; color: white; border-color: #2563eb; }
+        .panel { background: white; border-radius: 28px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .search-box { width: 100%; padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 50px; font-size: 1rem; background: #fafbfc; margin-bottom: 20px; outline: none; }
+        .search-box:focus { border-color: #2563eb; }
+        .school-list { display: flex; flex-direction: column; gap: 10px; max-height: 350px; overflow-y: auto; margin-bottom: 16px; }
+        .school-item { background: #f8fafc; padding: 16px 20px; border-radius: 20px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
         .school-item:hover { background: #eff6ff; border-color: #93c5fd; }
-        .btn {
-            padding: 10px 20px;
-            border-radius: 40px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            background: white;
-            border: 1px solid #cbd5e1;
-        }
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-            border: none;
-        }
-        .btn-success {
-            background: #16a34a;
-            color: white;
-            border: none;
-        }
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .school-panel {
-            background: white;
-            border-radius: 28px;
-            padding: 24px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            margin-top: 20px;
-        }
-        .modal {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        .modal-content {
-            background: white;
-            padding: 24px;
-            border-radius: 32px;
-            width: 90%;
-            max-width: 500px;
-        }
+        .badge { background: #e2e8f0; padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; color: #475569; }
+        .btn { padding: 12px 24px; border-radius: 40px; border: none; font-weight: 600; font-size: 0.95rem; cursor: pointer; background: white; border: 1px solid #cbd5e1; transition: all 0.2s; }
+        .btn-primary { background: #2563eb; color: white; border: none; }
+        .btn-success { background: #16a34a; color: white; border: none; }
+        .btn-danger { background: #dc2626; color: white; border: none; }
+        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+        .dashboard-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 24px; }
+        .card { background: white; padding: 20px; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .card h3 { font-size: 0.9rem; color: #64748b; margin-bottom: 8px; }
+        .card .value { font-size: 2.2rem; font-weight: 700; color: #0f172a; }
+        .school-panel { background: white; border-radius: 28px; padding: 24px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); margin-top: 20px; }
+        .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 28px; border-radius: 36px; width: 90%; max-width: 480px; max-height: 80vh; overflow-y: auto; }
         .flex-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-        .mt-4 { margin-top: 16px; }
-        .badge { background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .mt-2 { margin-top: 12px; }
+        .mt-4 { margin-top: 20px; }
+        .mb-2 { margin-bottom: 12px; }
         table { width: 100%; border-collapse: collapse; margin-top: 16px; }
         th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid #e2e8f0; }
-        .hidden { display: none; }
+        th { color: #64748b; font-weight: 500; font-size: 0.85rem; }
+        .hidden { display: none !important; }
+        select, input[type="number"] { padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 40px; font-size: 1rem; background: #fafbfc; }
+        .status-badge { padding: 4px 12px; border-radius: 30px; font-size: 0.8rem; font-weight: 500; }
+        .status-beklemede { background: #fef3c7; color: #92400e; }
+        .status-teslim { background: #dcfce7; color: #166534; }
     </style>
 </head>
 <body>
@@ -148,31 +52,31 @@
     
     <!-- Şehir Seçimi -->
     <div class="city-bar">
-        <button class="city-btn active" data-city="İstanbul">İstanbul</button>
-        <button class="city-btn" data-city="Kocaeli">Kocaeli</button>
-        <button class="city-btn" data-city="Yalova">Yalova</button>
-        <button class="city-btn" data-city="Bursa">Bursa</button>
+        <button class="city-btn active" data-city="İstanbul">📍 İstanbul</button>
+        <button class="city-btn" data-city="Kocaeli">📍 Kocaeli</button>
+        <button class="city-btn" data-city="Yalova">📍 Yalova</button>
+        <button class="city-btn" data-city="Bursa">📍 Bursa</button>
     </div>
 
-    <!-- İlçe & Okul Seçim Paneli -->
-    <div class="selector-panel">
-        <label>📍 İlçe Ara / Seç</label>
-        <input type="text" id="ilceSearch" class="search-box" placeholder="İlçe adı yazın veya seçin..." list="ilceList">
+    <!-- İlçe & Okul Seçim -->
+    <div class="panel">
+        <label style="font-weight: 600; margin-bottom: 8px; display: block;">🔍 İlçe Seçin</label>
+        <input type="text" id="ilceSearch" class="search-box" placeholder="İlçe adı yazın veya listeden seçin..." list="ilceList" autocomplete="off">
         <datalist id="ilceList"></datalist>
         
         <div id="schoolSection" class="hidden">
-            <div class="flex-row" style="justify-content: space-between;">
-                <h3>📚 Okullar</h3>
-                <button class="btn btn-primary" id="newSchoolBtn">➕ Yeni Okul Ekle</button>
+            <div class="flex-between mb-2">
+                <h3 style="font-size: 1.2rem;">📚 <span id="selectedIlceText"></span> Okulları</h3>
+                <button class="btn btn-primary btn-sm" id="newSchoolBtn">➕ Yeni Okul</button>
             </div>
             <div id="schoolList" class="school-list"></div>
         </div>
     </div>
 
-    <!-- Dashboard Özet -->
+    <!-- Dashboard -->
     <div class="dashboard-cards">
-        <div class="card">⏳ Bekleyen OPS: <strong id="totalBekleyen">0</strong></div>
-        <div class="card">🏫 Okul Sayısı: <strong id="totalOkul">0</strong></div>
+        <div class="card"><h3>⏳ Bekleyen OPS</h3><div class="value" id="totalBekleyen">0</div></div>
+        <div class="card"><h3>🏫 Toplam Okul</h3><div class="value" id="totalOkul">0</div></div>
     </div>
 
     <!-- Okul Paneli -->
@@ -181,113 +85,283 @@
     <!-- Yeni Okul Modal -->
     <div id="newSchoolModal" class="modal hidden">
         <div class="modal-content">
-            <h2>🏫 Yeni Okul Kaydı</h2>
-            <input type="text" id="newOkulAdi" class="search-box" placeholder="Okul Adı">
-            <input type="text" id="newKurumKodu" class="search-box" placeholder="Kurum Kodu">
+            <h2 style="margin-bottom: 20px;">🏫 Yeni Okul Kaydı</h2>
+            <label>Okul Adı *</label>
+            <input type="text" id="newOkulAdi" class="search-box" placeholder="Örn: Atatürk İlkokulu">
+            <label>Kurum Kodu *</label>
+            <input type="text" id="newKurumKodu" class="search-box" placeholder="Örn: 123456">
             <div class="flex-row mt-4">
-                <button class="btn btn-primary" id="saveSchoolBtn">Kaydet</button>
-                <button class="btn" id="cancelModalBtn">İptal</button>
+                <button class="btn btn-primary" id="saveSchoolBtn">✅ Kaydet</button>
+                <button class="btn" id="cancelModalBtn">❌ İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alım Modal -->
+    <div id="alimModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">📦 Yeni OPS Alımı</h2>
+            <label>Faz Seçin</label>
+            <select id="alimFaz" class="search-box">
+                <option value="Faz 1">Faz 1</option>
+                <option value="Faz 2">Faz 2</option>
+                <option value="Faz 3">Faz 3</option>
+            </select>
+            <label>Adet</label>
+            <input type="number" id="alimAdet" class="search-box" min="1" value="1">
+            <label>Not (Opsiyonel)</label>
+            <input type="text" id="alimNot" class="search-box" placeholder="Arıza / Açıklama">
+            <div class="flex-row mt-4">
+                <button class="btn btn-primary" id="saveAlimBtn">✅ Alımı Kaydet</button>
+                <button class="btn" id="cancelAlimBtn">❌ İptal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teslim Modal -->
+    <div id="teslimModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">✅ OPS Teslimi</h2>
+            <label>Teslim Edilecek Faz</label>
+            <select id="teslimFaz" class="search-box">
+                <option value="Faz 1">Faz 1</option>
+                <option value="Faz 2">Faz 2</option>
+                <option value="Faz 3">Faz 3</option>
+            </select>
+            <label>Adet</label>
+            <input type="number" id="teslimAdet" class="search-box" min="1" value="1">
+            <div class="flex-row mt-4">
+                <button class="btn btn-success" id="saveTeslimBtn">✅ Teslim Et</button>
+                <button class="btn" id="cancelTeslimBtn">❌ İptal</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // KENDİ APPS SCRIPT WEB APP URL'NİZİ BURAYA YAZIN
+    // API URL - SENİN APPS SCRIPT WEB APP LİNKİN
     const API_URL = 'https://script.google.com/macros/s/AKfycbyvHFPX0a7ubdDncW0zq3wm7_QVVXmHsT72aso2Au1husN7htkGZn6XE6JcKodvXd5HKw/exec';
     
     let currentCity = 'İstanbul';
     let currentIlce = '';
     let selectedSchool = null;
-    let allIlceler = {};
+    let allIlceler = [];
 
-    // İlçeleri Apps Script'ten al
+    // Sayfa yüklendi
+    window.onload = function() {
+        loadIlceler('İstanbul');
+        loadDashboard();
+        setupEventListeners();
+    };
+
+    function setupEventListeners() {
+        // Şehir butonları
+        document.querySelectorAll('.city-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCity = btn.dataset.city;
+                document.getElementById('schoolSection').classList.add('hidden');
+                document.getElementById('schoolPanel').classList.add('hidden');
+                loadIlceler(currentCity);
+            });
+        });
+
+        // İlçe arama
+        document.getElementById('ilceSearch').addEventListener('input', (e) => {
+            const val = e.target.value;
+            if (allIlceler.includes(val)) {
+                currentIlce = val;
+                document.getElementById('selectedIlceText').textContent = currentIlce;
+                loadSchools();
+            }
+        });
+
+        // Yeni okul modal
+        document.getElementById('newSchoolBtn').addEventListener('click', () => {
+            document.getElementById('newSchoolModal').classList.remove('hidden');
+        });
+        document.getElementById('cancelModalBtn').addEventListener('click', () => {
+            document.getElementById('newSchoolModal').classList.add('hidden');
+        });
+        document.getElementById('saveSchoolBtn').addEventListener('click', saveNewSchool);
+
+        // Alım modal
+        document.getElementById('cancelAlimBtn').addEventListener('click', () => {
+            document.getElementById('alimModal').classList.add('hidden');
+        });
+        document.getElementById('saveAlimBtn').addEventListener('click', saveAlim);
+
+        // Teslim modal
+        document.getElementById('cancelTeslimBtn').addEventListener('click', () => {
+            document.getElementById('teslimModal').classList.add('hidden');
+        });
+        document.getElementById('saveTeslimBtn').addEventListener('click', saveTeslim);
+    }
+
     async function loadIlceler(il) {
         try {
             const res = await fetch(`${API_URL}?action=getIlceler&il=${il}`);
             const data = await res.json();
             allIlceler = data;
             const datalist = document.getElementById('ilceList');
-            datalist.innerHTML = '';
-            data.forEach(ilce => {
-                const opt = document.createElement('option');
-                opt.value = ilce;
-                datalist.appendChild(opt);
-            });
+            datalist.innerHTML = data.map(ilce => `<option value="${ilce}">`).join('');
         } catch(e) { console.error(e); }
     }
 
-    // Şehir değişimi
-    document.querySelectorAll('.city-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentCity = btn.dataset.city;
-            document.getElementById('schoolSection').classList.add('hidden');
-            document.getElementById('schoolPanel').classList.add('hidden');
-            loadIlceler(currentCity);
-        });
-    });
-
-    // İlçe arama/seçim
-    document.getElementById('ilceSearch').addEventListener('input', (e) => {
-        const val = e.target.value;
-        if (allIlceler.includes(val)) {
-            currentIlce = val;
-            loadSchools();
-        }
-    });
-
     async function loadSchools() {
-        const res = await fetch(`${API_URL}?action=getOkullar&il=${currentCity}&ilce=${currentIlce}`);
-        const okullar = await res.json();
-        const listDiv = document.getElementById('schoolList');
-        listDiv.innerHTML = okullar.map(o => `
-            <div class="school-item" data-id="${o.id}">
-                <span><strong>${o.ad}</strong> <span class="badge">${o.kod}</span></span>
-                <button class="btn" onclick="selectSchool('${o.id}')">Seç</button>
-            </div>
-        `).join('');
-        document.getElementById('schoolSection').classList.remove('hidden');
+        try {
+            const res = await fetch(`${API_URL}?action=getOkullar&il=${currentCity}&ilce=${currentIlce}`);
+            const okullar = await res.json();
+            const listDiv = document.getElementById('schoolList');
+            if (okullar.length === 0) {
+                listDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #64748b;">Bu ilçede kayıtlı okul yok. "Yeni Okul" butonuyla ekleyin.</div>';
+            } else {
+                listDiv.innerHTML = okullar.map(o => `
+                    <div class="school-item" onclick="selectSchool('${o.id}')">
+                        <span><strong>${o.ad}</strong> <span class="badge">${o.kod}</span></span>
+                        <span style="color: #2563eb;">→</span>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('schoolSection').classList.remove('hidden');
+        } catch(e) { console.error(e); }
     }
 
     window.selectSchool = async function(id) {
-        const res = await fetch(`${API_URL}?action=getOkullar&il=${currentCity}&ilce=${currentIlce}`);
-        const okullar = await res.json();
-        selectedSchool = okullar.find(o => o.id == id);
-        renderSchoolPanel();
+        try {
+            const res = await fetch(`${API_URL}?action=getOkullar&il=${currentCity}&ilce=${currentIlce}`);
+            const okullar = await res.json();
+            selectedSchool = okullar.find(o => o.id == id);
+            await renderSchoolPanel();
+        } catch(e) { console.error(e); }
     };
+
+    async function saveNewSchool() {
+        const ad = document.getElementById('newOkulAdi').value.trim();
+        const kod = document.getElementById('newKurumKodu').value.trim();
+        if (!ad || !kod) { alert('Okul adı ve kurum kodu zorunludur!'); return; }
+        
+        try {
+            const res = await fetch(`${API_URL}?action=okulEkle&il=${currentCity}&ilce=${currentIlce}&ad=${encodeURIComponent(ad)}&kod=${encodeURIComponent(kod)}`);
+            const yeniOkul = await res.json();
+            document.getElementById('newSchoolModal').classList.add('hidden');
+            document.getElementById('newOkulAdi').value = '';
+            document.getElementById('newKurumKodu').value = '';
+            loadSchools();
+            loadDashboard();
+            selectSchool(yeniOkul.id);
+        } catch(e) { console.error(e); }
+    }
 
     async function renderSchoolPanel() {
         if (!selectedSchool) return;
-        const islemler = await fetch(`${API_URL}?action=getIslemler&okulId=${selectedSchool.id}`).then(r => r.json());
-        const panel = document.getElementById('schoolPanel');
-        panel.classList.remove('hidden');
-        panel.innerHTML = `
-            <h2>🏫 ${selectedSchool.ad} (${selectedSchool.kod})</h2>
-            <div class="flex-row mt-4">
-                <button class="btn btn-primary" onclick="openAlimModal()">➕ Yeni Alım</button>
-                <button class="btn btn-success" onclick="openTeslimModal()">✅ Teslim Et</button>
-            </div>
-            <h3 class="mt-4">📋 Bekleyen OPS'ler</h3>
-            <table>
-                <tr><th>Faz</th><th>Adet</th><th>Not</th></tr>
-                ${islemler.filter(i => i.tip === 'Alım' && i.teslimDurumu === 'Beklemede').map(i => `
-                    <tr><td>Faz ${i.faz}</td><td>${i.adet}</td><td>${i.not || '-'}</td></tr>
-                `).join('')}
-            </table>
-            <h3 class="mt-4">📅 İşlem Geçmişi</h3>
-            <table>
-                <tr><th>Tarih</th><th>İşlem</th><th>Faz</th><th>Adet</th><th>Not</th></tr>
-                ${islemler.map(i => `
-                    <tr><td>${i.tarih}</td><td>${i.tip}</td><td>${i.faz}</td><td>${i.adet}</td><td>${i.not || ''}</td></tr>
-                `).join('')}
-            </table>
-        `;
+        
+        try {
+            const islemRes = await fetch(`${API_URL}?action=getIslemler&okulId=${selectedSchool.id}`);
+            const islemler = await islemRes.json();
+            
+            const bekleyenler = islemler.filter(i => i.tip === 'Alım' && i.teslimDurumu === 'Beklemede');
+            const toplamBekleyen = bekleyenler.reduce((sum, i) => sum + parseInt(i.adet), 0);
+            
+            const panel = document.getElementById('schoolPanel');
+            panel.classList.remove('hidden');
+            panel.innerHTML = `
+                <div class="flex-between">
+                    <div>
+                        <h2 style="font-size: 1.5rem;">🏫 ${selectedSchool.ad}</h2>
+                        <p style="color: #64748b; margin-top: 4px;">📌 ${selectedSchool.il} / ${selectedSchool.ilce} | Kurum Kodu: ${selectedSchool.kod}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 2rem; font-weight: 700; color: #2563eb;">${toplamBekleyen}</div>
+                        <div style="color: #64748b;">Bekleyen OPS</div>
+                    </div>
+                </div>
+                
+                <div class="flex-row mt-4">
+                    <button class="btn btn-primary" onclick="openAlimModal()">➕ Yeni OPS Alımı</button>
+                    <button class="btn btn-success" onclick="openTeslimModal()" ${toplamBekleyen === 0 ? 'disabled' : ''}>✅ Teslim Et</button>
+                </div>
+                
+                <h3 class="mt-4">📋 Bekleyen OPS'ler</h3>
+                ${bekleyenler.length > 0 ? `
+                    <table>
+                        <tr><th>Tarih</th><th>Faz</th><th>Adet</th><th>Not</th></tr>
+                        ${bekleyenler.map(i => `
+                            <tr><td>${i.tarih}</td><td>${i.faz}</td><td>${i.adet}</td><td>${i.not || '-'}</td></tr>
+                        `).join('')}
+                    </table>
+                ` : '<p style="color: #64748b; padding: 16px;">Bekleyen OPS bulunmuyor.</p>'}
+                
+                <h3 class="mt-4">📅 Tüm İşlem Geçmişi</h3>
+                <table>
+                    <tr><th>Tarih</th><th>İşlem</th><th>Faz</th><th>Adet</th><th>Durum</th><th>Not</th></tr>
+                    ${islemler.slice().reverse().map(i => `
+                        <tr>
+                            <td>${i.tarih}</td>
+                            <td>${i.tip}</td>
+                            <td>${i.faz}</td>
+                            <td>${i.adet}</td>
+                            <td><span class="status-badge ${i.teslimDurumu === 'Beklemede' ? 'status-beklemede' : 'status-teslim'}">${i.teslimDurumu || '-'}</span></td>
+                            <td>${i.not || '-'}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+            
+            window.selectedSchoolIslemler = islemler;
+        } catch(e) { console.error(e); }
     }
 
-    // Başlangıç
-    loadIlceler('İstanbul');
+    async function loadDashboard() {
+        try {
+            const res = await fetch(`${API_URL}?action=getBekleyenOzet`);
+            const data = await res.json();
+            const total = data.reduce((sum, o) => sum + (o.bekleyen || 0), 0);
+            document.getElementById('totalBekleyen').textContent = total;
+            document.getElementById('totalOkul').textContent = data.length;
+        } catch(e) { console.error(e); }
+    }
+
+    window.openAlimModal = function() {
+        document.getElementById('alimModal').classList.remove('hidden');
+    };
+
+    window.openTeslimModal = function() {
+        document.getElementById('teslimModal').classList.remove('hidden');
+    };
+
+    async function saveAlim() {
+        const faz = document.getElementById('alimFaz').value;
+        const adet = document.getElementById('alimAdet').value;
+        const not = document.getElementById('alimNot').value;
+        
+        if (!adet || adet < 1) { alert('Geçerli bir adet giriniz!'); return; }
+        
+        try {
+            await fetch(`${API_URL}?action=islemEkle&okulId=${selectedSchool.id}&tip=Alım&faz=${encodeURIComponent(faz)}&adet=${adet}&not=${encodeURIComponent(not)}`);
+            document.getElementById('alimModal').classList.add('hidden');
+            document.getElementById('alimNot').value = '';
+            document.getElementById('alimAdet').value = 1;
+            await renderSchoolPanel();
+            loadDashboard();
+        } catch(e) { console.error(e); }
+    }
+
+    async function saveTeslim() {
+        const faz = document.getElementById('teslimFaz').value;
+        const adet = document.getElementById('teslimAdet').value;
+        
+        if (!adet || adet < 1) { alert('Geçerli bir adet giriniz!'); return; }
+        
+        try {
+            await fetch(`${API_URL}?action=teslimEt&okulId=${selectedSchool.id}&faz=${encodeURIComponent(faz)}&adet=${adet}`);
+            document.getElementById('teslimModal').classList.add('hidden');
+            document.getElementById('teslimAdet').value = 1;
+            await renderSchoolPanel();
+            loadDashboard();
+        } catch(e) { console.error(e); }
+    }
 </script>
 </body>
 </html>
